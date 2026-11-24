@@ -1,0 +1,363 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ApplyWise | Opportunity Agent</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #f4f6fb;
+  color: #20243a;
+}
+
+header {
+  background: #182447;
+  color: white;
+  padding: 22px 8%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h2 { color: #8de0c0; }
+
+.hero {
+  text-align: center;
+  padding: 45px 15px 25px;
+}
+
+.hero h1 {
+  font-size: 36px;
+  margin-bottom: 12px;
+}
+
+.hero p { color: #697087; }
+
+.container {
+  max-width: 950px;
+  margin: 25px auto;
+  padding: 20px;
+}
+
+.card {
+  background: white;
+  padding: 25px;
+  margin-bottom: 22px;
+  border-radius: 14px;
+  box-shadow: 0 4px 15px #0000000d;
+}
+
+h3 { margin-bottom: 18px; }
+
+input, textarea, select {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0 15px;
+  border: 1px solid #d8dce8;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+textarea { min-height: 90px; resize: vertical; }
+
+button {
+  background: #3159bd;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover { background: #203f91; }
+
+.result {
+  display: none;
+  background: #eef8f3;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 18px;
+}
+
+.score {
+  font-size: 32px;
+  color: #16845b;
+  font-weight: bold;
+}
+
+ul { padding-left: 22px; }
+li { margin: 10px 0; }
+
+.saved {
+  border-left: 4px solid #3159bd;
+  padding: 12px;
+  margin: 12px 0;
+  background: #f5f7fc;
+  border-radius: 5px;
+}
+
+footer {
+  text-align: center;
+  padding: 25px;
+  color: #777;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h2>ApplyWise</h2>
+  <span>AI Opportunity Agent</span>
+</header>
+
+<section class="hero">
+  <h1>Find Opportunities. Apply Smarter.</h1>
+  <p>Your personal assistant for internships, scholarships and hackathons.</p>
+</section>
+
+<div class="container">
+
+  <section class="card">
+    <h3>👤 Your Student Profile</h3>
+
+    <label>Name</label>
+    <input id="name" placeholder="Enter your name">
+
+    <label>Education</label>
+    <select id="education">
+      <option value="">Select education</option>
+      <option>1st Year</option>
+      <option>2nd Year</option>
+      <option>3rd Year</option>
+      <option>4th Year</option>
+    </select>
+
+    <label>Skills (comma separated)</label>
+    <input id="skills" placeholder="HTML, Java, Python">
+
+    <label>Interests</label>
+    <input id="interests" placeholder="AI, coding, internships">
+
+    <button onclick="saveProfile()">Save Profile</button>
+    <p id="profileStatus"></p>
+  </section>
+
+  <section class="card">
+    <h3>🔎 Analyze an Opportunity</h3>
+
+    <label>Opportunity Name</label>
+    <input id="oppName" placeholder="e.g. AI Innovation Hackathon">
+
+    <label>Opportunity Type</label>
+    <select id="type">
+      <option>Internship</option>
+      <option>Hackathon</option>
+      <option>Scholarship</option>
+      <option>Competition</option>
+      <option>Workshop</option>
+    </select>
+
+    <label>Required Skills</label>
+    <input id="required" placeholder="Java, Python, HTML">
+
+    <label>Minimum Education</label>
+    <select id="minimum">
+      <option>Any Year</option>
+      <option>1st Year</option>
+      <option>2nd Year</option>
+      <option>3rd Year</option>
+      <option>4th Year</option>
+    </select>
+
+    <label>Application Deadline</label>
+    <input type="date" id="deadline">
+
+    <label>Opportunity Details / Eligibility Requirements</label>
+    <textarea id="details" placeholder="Paste the opportunity description and eligibility requirements here..."></textarea>
+
+    <button onclick="analyze()">Analyze Opportunity</button>
+
+    <div class="result" id="result">
+      <h3>Analysis Results</h3>
+      <div class="score" id="score"></div>
+      <p id="eligibility"></p>
+      <br>
+      <h4>Application Checklist</h4>
+      <ul id="checklist"></ul>
+      <br>
+      <button onclick="saveOpportunity()">Save Opportunity</button>
+    </div>
+  </section>
+
+  <section class="card">
+    <h3>⭐ My Saved Opportunities</h3>
+    <div id="savedList">No opportunities saved yet.</div>
+  </section>
+
+</div>
+
+<footer>
+  ApplyWise © 2026 | Built to make opportunities accessible.
+</footer>
+
+<script>
+let profile = {};
+let currentOpportunity = {};
+
+function saveProfile() {
+  profile = {
+    name: document.getElementById("name").value,
+    education: document.getElementById("education").value,
+    skills: document.getElementById("skills").value
+      .toLowerCase().split(",").map(x => x.trim()).filter(Boolean),
+    interests: document.getElementById("interests").value
+  };
+
+  localStorage.setItem("profile", JSON.stringify(profile));
+  document.getElementById("profileStatus").innerText =
+    "Profile saved successfully!";
+}
+
+function analyze() {
+  if (!profile.name || !profile.education ||
+      !profile.skills || profile.skills.length === 0) {
+    alert("Please complete and save your student profile first!");
+    return;
+  }
+
+  const name = document.getElementById("oppName").value.trim();
+  const required = document.getElementById("required").value
+    .toLowerCase().split(",").map(x => x.trim()).filter(Boolean);
+  const minimum = document.getElementById("minimum").value;
+  const deadline = document.getElementById("deadline").value;
+  const details = document.getElementById("details").value.trim();
+
+  if (!name || !required.length || !deadline || !details) {
+    alert("Please fill all opportunity details!");
+    return;
+  }
+
+  const matching = required.filter(skill =>
+    profile.skills.includes(skill)
+  );
+
+  const skillScore = required.length
+    ? matching.length / required.length : 0;
+
+  const years = ["1st Year", "2nd Year", "3rd Year", "4th Year"];
+  const eligible = minimum === "Any Year" ||
+    years.indexOf(profile.education) >= years.indexOf(minimum);
+
+  const score = Math.round(
+    skillScore * 80 + (eligible ? 20 : 0)
+  );
+
+  currentOpportunity = {
+    name, type: document.getElementById("type").value,
+    score, eligible, deadline, matching, required
+  };
+
+  document.getElementById("score").innerText =
+    score + "% Match";
+
+  document.getElementById("eligibility").innerText =
+    eligible
+      ? "✅ Meets the specified education requirement."
+      : "⚠️ Does not meet the specified education requirement.";
+
+  const tasks = [
+    "Read the complete opportunity requirements",
+    "Prepare your updated resume",
+    "Prepare relevant certificates and documents",
+    "Complete the application form",
+    "Submit before the deadline"
+  ];
+
+  if (matching.length < required.length) {
+    tasks.unshift("Learn or improve missing skills: " +
+      required.filter(x => !matching.includes(x)).join(", "));
+  }
+
+  document.getElementById("checklist").innerHTML = "";
+
+  tasks.forEach(task => {
+    const li = document.createElement("li");
+    const check = document.createElement("input");
+    check.type = "checkbox";
+    check.style.width = "auto";
+    li.appendChild(check);
+    li.append(" " + task);
+    document.getElementById("checklist").appendChild(li);
+  });
+
+  document.getElementById("result").style.display = "block";
+}
+
+function saveOpportunity() {
+  let saved = JSON.parse(localStorage.getItem("saved") || "[]");
+
+  if (saved.some(x => x.name === currentOpportunity.name)) {
+    alert("This opportunity is already saved!");
+    return;
+  }
+
+  saved.push(currentOpportunity);
+  localStorage.setItem("saved", JSON.stringify(saved));
+  displaySaved();
+  alert("Opportunity saved!");
+}
+
+function displaySaved() {
+  const saved = JSON.parse(localStorage.getItem("saved") || "[]");
+  const list = document.getElementById("savedList");
+  list.innerHTML = "";
+
+  if (!saved.length) {
+    list.innerText = "No opportunities saved yet.";
+    return;
+  }
+
+  saved.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "saved";
+
+    const title = document.createElement("strong");
+    title.textContent = item.name;
+
+    const info = document.createElement("p");
+    info.textContent = item.type + " | " +
+      item.score + "% match | Deadline: " + item.deadline;
+
+    div.append(title, info);
+    list.appendChild(div);
+  });
+}
+
+window.onload = function() {
+  const oldProfile = JSON.parse(localStorage.getItem("profile") || "null");
+
+  if (oldProfile) {
+    profile = oldProfile;
+    document.getElementById("name").value = profile.name;
+    document.getElementById("education").value = profile.education;
+    document.getElementById("skills").value = profile.skills.join(", ");
+    document.getElementById("interests").value = profile.interests;
+  }
+
+  displaySaved();
+};
+</script>
+
+</body>
+</html>
