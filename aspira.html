@@ -1,363 +1,339 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Aspira | Opportunity Agent</title>
-
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-}
-
-body {
-  background: #f4f6fb;
-  color: #20243a;
-}
-
-header {
-  background: #182447;
-  color: white;
-  padding: 22px 8%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-header h2 { color: #8de0c0; }
-
-.hero {
-  text-align: center;
-  padding: 45px 15px 25px;
-}
-
-.hero h1 {
-  font-size: 36px;
-  margin-bottom: 12px;
-}
-
-.hero p { color: #697087; }
-
-.container {
-  max-width: 950px;
-  margin: 25px auto;
-  padding: 20px;
-}
-
-.card {
-  background: white;
-  padding: 25px;
-  margin-bottom: 22px;
-  border-radius: 14px;
-  box-shadow: 0 4px 15px #0000000d;
-}
-
-h3 { margin-bottom: 18px; }
-
-input, textarea, select {
-  width: 100%;
-  padding: 12px;
-  margin: 8px 0 15px;
-  border: 1px solid #d8dce8;
-  border-radius: 8px;
-  font-size: 15px;
-}
-
-textarea { min-height: 90px; resize: vertical; }
-
-button {
-  background: #3159bd;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-button:hover { background: #203f91; }
-
-.result {
-  display: none;
-  background: #eef8f3;
-  padding: 20px;
-  border-radius: 10px;
-  margin-top: 18px;
-}
-
-.score {
-  font-size: 32px;
-  color: #16845b;
-  font-weight: bold;
-}
-
-ul { padding-left: 22px; }
-li { margin: 10px 0; }
-
-.saved {
-  border-left: 4px solid #3159bd;
-  padding: 12px;
-  margin: 12px 0;
-  background: #f5f7fc;
-  border-radius: 5px;
-}
-
-footer {
-  text-align: center;
-  padding: 25px;
-  color: #777;
-}
+:root{--bg:#f4f6fb;--tx:#20243a;--mu:#5d647c;--cd:#fff;--bd:#d8dce8;--hd:#182447;--ac:#3159bd;--ach:#203f91;--bt:#fff;--gn:#16845b;--gb:#eef8f3;--sv:#f5f7fc;--wr:#9a4b00;--wb:#fff4e0;--rd:#b42318;--rb:#fdecea;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1426;--tx:#e6e9f5;--mu:#a0a9c4;--cd:#1a2140;--bd:#33406b;--hd:#0a0f20;--ac:#7f9cf5;--ach:#9bb3f8;--bt:#0f1426;--gn:#5fd7a6;--gb:#13291f;--sv:#222a4d;--wr:#f5b85a;--wb:#33270f;--rd:#ff8b7e;--rb:#3a1a17}}
+:root[data-theme="dark"]{--bg:#0f1426;--tx:#e6e9f5;--mu:#a0a9c4;--cd:#1a2140;--bd:#33406b;--hd:#0a0f20;--ac:#7f9cf5;--ach:#9bb3f8;--bt:#0f1426;--gn:#5fd7a6;--gb:#13291f;--sv:#222a4d;--wr:#f5b85a;--wb:#33270f;--rd:#ff8b7e;--rb:#3a1a17}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--tx)}
+[hidden]{display:none!important}
+header{background:var(--hd);color:#fff;padding:18px 6%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+header h2{color:#8de0c0}
+nav a{color:#fff;text-decoration:none;margin-left:18px;padding-bottom:4px;font-weight:bold;opacity:.75}
+nav a.on{opacity:1;border-bottom:2px solid #8de0c0}
+.hero{text-align:center;padding:40px 15px 20px}
+.hero h1{font-size:clamp(26px,5vw,36px);margin-bottom:12px}
+.hero p{color:var(--mu);margin-bottom:18px}
+.container{max-width:980px;margin:20px auto;padding:16px}
+.card{background:var(--cd);padding:24px;margin-bottom:22px;border-radius:14px;box-shadow:0 4px 15px #0000001a}
+h3{margin-bottom:16px}
+label{font-size:14px;font-weight:bold}
+input,textarea,select{width:100%;padding:12px;margin:8px 0 15px;border:1px solid var(--bd);border-radius:8px;font-size:15px;background:var(--cd);color:var(--tx)}
+textarea{min-height:90px;resize:vertical}
+button,.btn{background:var(--ac);color:var(--bt);padding:11px 18px;border:0;border-radius:8px;cursor:pointer;font-weight:bold;font-size:14px;text-decoration:none;display:inline-block}
+button:hover,.btn:hover{background:var(--ach)}
+.ghost{background:transparent;color:var(--ac);border:1px solid var(--ac)}
+.ghost:hover{background:var(--sv)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 14px}
+.chip{background:var(--sv);color:var(--tx);border:1px solid var(--bd)}
+.chip:hover{background:var(--bd)}
+.chip.on{background:var(--ac);color:var(--bt);border-color:var(--ac)}
+.result{display:none;background:var(--gb);padding:20px;border-radius:10px;margin-top:18px}
+.score{font-size:32px;color:var(--gn);font-weight:bold}
+ul{padding-left:22px}li{margin:10px 0}
+.saved{border-left:4px solid var(--ac);padding:12px;margin:12px 0;background:var(--sv);border-radius:5px;display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.saved p{color:var(--mu);font-size:14px;margin-top:4px}
+.msg{padding:12px;border-radius:8px;margin-top:12px;font-size:14px;line-height:1.4}
+.msg.ok{background:var(--gb);color:var(--gn)}
+.msg.warn{background:var(--wb);color:var(--wr)}
+.msg.bad{background:var(--rb);color:var(--rd)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px}
+.op{background:var(--cd);border:1px solid var(--bd);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:8px}
+.op p{color:var(--mu);font-size:14px;flex:1;line-height:1.4}
+.tag{font-size:12px;padding:3px 9px;border-radius:20px;background:var(--sv);color:var(--mu);margin-right:6px;display:inline-block}
+.vf{color:var(--gn);font-size:12px;font-weight:bold}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.muted{color:var(--mu);font-size:14px;margin-bottom:14px;line-height:1.4}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--hd);color:#fff;padding:10px 18px;border-radius:20px;font-size:14px;z-index:20}
+footer{text-align:center;padding:25px;color:var(--mu);font-size:14px}
 </style>
 </head>
-
 <body>
 
 <header>
-  <h2>Aspira</h2>
-  <span>AI Opportunity Agent</span>
+  <h2>🎯 Aspira</h2>
+  <nav><a href="#home" id="n-home">Home</a><a href="#explore" id="n-explore">Explore</a></nav>
 </header>
 
-<section class="hero">
-  <h1>Find Opportunities. Apply Smarter.</h1>
-  <p>Your personal assistant for internships, scholarships and hackathons.</p>
-</section>
-
-<div class="container">
-
-  <section class="card">
-    <h3>👤 Your Student Profile</h3>
-
-    <label>Name</label>
-    <input id="name" placeholder="Enter your name">
-
-    <label>Education</label>
-    <select id="education">
-      <option value="">Select education</option>
-      <option>1st Year</option>
-      <option>2nd Year</option>
-      <option>3rd Year</option>
-      <option>4th Year</option>
-    </select>
-
-    <label>Skills (comma separated)</label>
-    <input id="skills" placeholder="HTML, Java, Python">
-
-    <label>Interests</label>
-    <input id="interests" placeholder="AI, coding, internships">
-
-    <button onclick="saveProfile()">Save Profile</button>
-    <p id="profileStatus"></p>
+<main id="v-home">
+  <section class="hero">
+    <h1>Find Opportunities. Apply Smarter.</h1>
+    <p>Your personal assistant for verified internships, scholarships and hackathons.</p>
+    <a class="btn" href="#explore">Explore verified opportunities</a>
   </section>
+  <div class="container">
+    <section class="card">
+      <h3>👤 Your Student Profile</h3>
+      <label for="name">Name</label>
+      <input id="name" placeholder="Enter your name">
+      <label for="education">Education</label>
+      <select id="education">
+        <option value="">Select education</option>
+        <option>1st Year</option><option>2nd Year</option><option>3rd Year</option><option>4th Year</option>
+      </select>
+      <label for="skills">Skills (comma separated)</label>
+      <input id="skills" placeholder="HTML, Java, Python">
+      <label for="interests">Interests</label>
+      <input id="interests" placeholder="AI, coding, internships">
+      <button onclick="saveProfile()">Save Profile</button>
+      <p id="profileStatus" class="muted" style="margin-top:10px"></p>
+    </section>
 
-  <section class="card">
-    <h3>🔎 Analyze an Opportunity</h3>
+    <section class="card">
+      <h3>🔎 Analyze an Opportunity</h3>
+      <label for="oppName">Opportunity Name</label>
+      <input id="oppName" placeholder="e.g. AI Innovation Hackathon">
+      <label for="type">Opportunity Type</label>
+      <select id="type"><option>Internship</option><option>Hackathon</option><option>Scholarship</option><option>Competition</option><option>Workshop</option></select>
+      <label for="required">Required Skills</label>
+      <input id="required" placeholder="Java, Python, HTML">
+      <label for="minimum">Minimum Education</label>
+      <select id="minimum"><option>Any Year</option><option>1st Year</option><option>2nd Year</option><option>3rd Year</option><option>4th Year</option></select>
+      <label for="deadline">Application Deadline</label>
+      <input type="date" id="deadline">
+      <label for="link">Opportunity Link (optional, checked for legitimacy)</label>
+      <input id="link" placeholder="https://...">
+      <label for="details">Opportunity Details / Eligibility Requirements</label>
+      <textarea id="details" placeholder="Paste the opportunity description and eligibility requirements here..."></textarea>
+      <button onclick="analyze()">Analyze Opportunity</button>
 
-    <label>Opportunity Name</label>
-    <input id="oppName" placeholder="e.g. AI Innovation Hackathon">
+      <div class="result" id="result">
+        <h3>Analysis Results</h3>
+        <div class="score" id="score"></div>
+        <p id="eligibility"></p>
+        <div id="flags"></div>
+        <br>
+        <h4>Application Checklist</h4>
+        <ul id="checklist"></ul>
+        <br>
+        <button onclick="saveOpp(cur)">Save Opportunity</button>
+      </div>
+    </section>
 
-    <label>Opportunity Type</label>
-    <select id="type">
-      <option>Internship</option>
-      <option>Hackathon</option>
-      <option>Scholarship</option>
-      <option>Competition</option>
-      <option>Workshop</option>
-    </select>
+    <section class="card">
+      <h3>⭐ My Saved Opportunities</h3>
+      <div id="savedList"></div>
+    </section>
+  </div>
+</main>
 
-    <label>Required Skills</label>
-    <input id="required" placeholder="Java, Python, HTML">
-
-    <label>Minimum Education</label>
-    <select id="minimum">
-      <option>Any Year</option>
-      <option>1st Year</option>
-      <option>2nd Year</option>
-      <option>3rd Year</option>
-      <option>4th Year</option>
-    </select>
-
-    <label>Application Deadline</label>
-    <input type="date" id="deadline">
-
-    <label>Opportunity Details / Eligibility Requirements</label>
-    <textarea id="details" placeholder="Paste the opportunity description and eligibility requirements here..."></textarea>
-
-    <button onclick="analyze()">Analyze Opportunity</button>
-
-    <div class="result" id="result">
-      <h3>Analysis Results</h3>
-      <div class="score" id="score"></div>
-      <p id="eligibility"></p>
-      <br>
-      <h4>Application Checklist</h4>
-      <ul id="checklist"></ul>
-      <br>
-      <button onclick="saveOpportunity()">Save Opportunity</button>
-    </div>
+<main id="v-explore" hidden>
+  <section class="hero">
+    <h1>Verified Opportunities</h1>
+    <p>Official portals and well-known platforms for scholarships, hackathons and internships.</p>
   </section>
+  <div class="container">
+    <section class="card">
+      <h3>✅ Directory</h3>
+      <p class="muted">Aspira lists official portals and trusted platforms, not individual postings. Open each site for live listings, dates and eligibility. Save your profile on Home to see which ones match your skills.</p>
+      <input id="q" placeholder="Search by name, topic or skill" oninput="render()">
+      <div class="chips" id="chips"></div>
+      <select id="reg" onchange="render()"><option value="all">All regions</option><option value="IN">India</option><option value="GL">Global</option></select>
+      <p class="muted" id="count"></p>
+      <div class="grid" id="grid"></div>
+    </section>
 
-  <section class="card">
-    <h3>⭐ My Saved Opportunities</h3>
-    <div id="savedList">No opportunities saved yet.</div>
-  </section>
+    <section class="card">
+      <h3>🛡️ Is this link legit?</h3>
+      <p class="muted">Paste a link you received. Aspira checks it against its verified list.</p>
+      <input id="chk" placeholder="Paste a link here">
+      <button onclick="check()">Check link</button>
+      <div id="chkOut"></div>
+    </section>
 
-</div>
+    <section class="card">
+      <h3>🚩 Red flags of fake opportunities</h3>
+      <ul>
+        <li>Asks for a registration, processing or “refundable” deposit fee.</li>
+        <li>Contacts you only on WhatsApp or Telegram, or from a personal Gmail or Yahoo address instead of an official domain.</li>
+        <li>Guarantees selection or a job, or pressures you with “only a few seats left”.</li>
+        <li>Asks for your OTP, PIN or card details.</li>
+        <li>Can’t be found on the organiser’s official website or verified social page.</li>
+      </ul>
+    </section>
+  </div>
+</main>
 
-<footer>
-  Aspira © 2026 | Built to make opportunities accessible.
-</footer>
+<footer>Aspira © 2026 | Built to make opportunities accessible. Always confirm details on the official website.</footer>
+<div class="toast" id="toast" hidden></div>
 
 <script>
-let profile = {};
-let currentOpportunity = {};
+const $=id=>document.getElementById(id);
+const g=(k,d)=>{try{const v=JSON.parse(localStorage.getItem(k));return v==null?d:v}catch(e){return d}};
+const s=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+const T={S:"Scholarship",H:"Hackathon",I:"Internship"};
+// name, type, region, description, official url, skill tags
+const D=[
+["National Scholarship Portal (NSP)","S","IN","Government of India’s one-stop portal for central and state scholarships.","https://scholarships.gov.in","engineering"],
+["Buddy4Study","S","IN","Trusted platform listing corporate and foundation scholarships.","https://www.buddy4study.com","engineering"],
+["Vidyasaarathi","S","IN","NSDL e-Governance platform for scholarships from corporates and trusts.","https://www.vidyasaarathi.co.in","engineering"],
+["AICTE Scholarship Schemes","S","IN","Pragati (for girl students) and Saksham (for specially-abled students) in technical education.","https://www.aicte-india.org","engineering"],
+["Reliance Foundation Scholarships","S","IN","Merit and need based scholarships for first-year undergraduates.","https://www.reliancefoundation.org","engineering"],
+["Foundation for Excellence","S","IN","Scholarships and mentoring for talented engineering students with financial need.","https://www.ffe.org","engineering"],
+["Smart India Hackathon","H","IN","Nationwide government-backed hackathon built around real problem statements.","https://www.sih.gov.in","ai web java python coding"],
+["Devfolio","H","IN","Hosting platform for many of India’s biggest student hackathons.","https://devfolio.co","web ai python coding"],
+["Unstop","H","IN","Hackathons, competitions and internships from companies and institutions.","https://unstop.com","ai coding python java"],
+["Devpost","H","GL","Global hackathon platform with online and in-person events.","https://devpost.com","web ai python coding"],
+["Major League Hacking (MLH)","H","GL","Official student hackathon league with events worldwide.","https://mlh.io","web coding python"],
+["HackerEarth","H","GL","Company-hosted hackathons and coding challenges.","https://www.hackerearth.com","coding java python"],
+["Kaggle Competitions","H","GL","Machine learning and data science competitions with free notebooks.","https://www.kaggle.com/competitions","ai ml python data"],
+["Internshala","I","IN","Popular internship platform in India. Never pay a fee to apply.","https://internshala.com","web java python coding"],
+["AICTE Internship Portal","I","IN","Government-run portal connecting students with approved internships.","https://internship.aicte-india.org","coding ai"],
+["Google Summer of Code","I","GL","Paid open-source programme for beginners (18+).","https://summerofcode.withgoogle.com","python java c++ git coding"],
+["LinkedIn Jobs","I","GL","Filter by “Internship” and apply only to companies with verified pages.","https://www.linkedin.com/jobs","coding ai web"],
+["Wellfound","I","GL","Startup internships with direct contact to founders and recruiters.","https://wellfound.com","web coding python"],
+["Google Careers","I","GL","Official Google internships and student programmes. Apply only here.","https://careers.google.com","coding ai java python c++"],
+["Forage Virtual Experiences","I","GL","Free job simulations by real companies, with completion certificates.","https://www.theforage.com","coding ai python data"]
+];
+const V=D.map(d=>new URL(d[4]).hostname.replace(/^www\./,""));
+let profile=g("profile",{}),cur={},F="all",tt;
 
-function saveProfile() {
-  profile = {
-    name: document.getElementById("name").value,
-    education: document.getElementById("education").value,
-    skills: document.getElementById("skills").value
-      .toLowerCase().split(",").map(x => x.trim()).filter(Boolean),
-    interests: document.getElementById("interests").value
-  };
-
-  localStorage.setItem("profile", JSON.stringify(profile));
-  document.getElementById("profileStatus").innerText =
-    "Profile saved successfully!";
+function toast(m){const t=$("toast");t.textContent=m;t.hidden=false;clearTimeout(tt);tt=setTimeout(()=>t.hidden=true,2200)}
+function box(cls,txt){const d=document.createElement("div");d.className="msg "+cls;d.textContent=txt;return d}
+function href(raw){try{const u=new URL(/^https?:\/\//i.test(raw)?raw:"https://"+raw);return /^https?:$/.test(u.protocol)?u.href:""}catch(e){return ""}}
+function verdict(raw){
+  const u=href(raw);if(!u)return null;
+  const h=new URL(u).hostname.toLowerCase().replace(/^www\./,"");
+  if(!h.includes("."))return null;
+  if(V.some(v=>h===v||h.endsWith("."+v)))return["ok","✅ "+h+" is an official or well-known platform in Aspira’s verified list."];
+  if(/\.(gov\.in|nic\.in|ac\.in|edu\.in|gov|edu)$/.test(h))return["ok","🏛️ "+h+" looks like a government or academic domain. Still confirm the page from the organiser’s main site."];
+  return["warn","⚠️ "+h+" isn’t in Aspira’s verified list. That doesn’t mean it’s fake. Check the red flags and find the same opportunity on the organiser’s official site before sharing any details."];
+}
+function check(){
+  const o=$("chkOut");o.innerHTML="";
+  const v=verdict($("chk").value.trim());
+  o.appendChild(v?box(v[0],v[1]):box("bad","That doesn’t look like a valid web link. Paste the full address, for example https://example.com."));
 }
 
-function analyze() {
-  if (!profile.name || !profile.education ||
-      !profile.skills || profile.skills.length === 0) {
-    alert("Please complete and save your student profile first!");
-    return;
-  }
-
-  const name = document.getElementById("oppName").value.trim();
-  const required = document.getElementById("required").value
-    .toLowerCase().split(",").map(x => x.trim()).filter(Boolean);
-  const minimum = document.getElementById("minimum").value;
-  const deadline = document.getElementById("deadline").value;
-  const details = document.getElementById("details").value.trim();
-
-  if (!name || !required.length || !deadline || !details) {
-    alert("Please fill all opportunity details!");
-    return;
-  }
-
-  const matching = required.filter(skill =>
-    profile.skills.includes(skill)
-  );
-
-  const skillScore = required.length
-    ? matching.length / required.length : 0;
-
-  const years = ["1st Year", "2nd Year", "3rd Year", "4th Year"];
-  const eligible = minimum === "Any Year" ||
-    years.indexOf(profile.education) >= years.indexOf(minimum);
-
-  const score = Math.round(
-    skillScore * 80 + (eligible ? 20 : 0)
-  );
-
-  currentOpportunity = {
-    name, type: document.getElementById("type").value,
-    score, eligible, deadline, matching, required
+function saveProfile(){
+  profile={
+    name:$("name").value.trim(),
+    education:$("education").value,
+    skills:$("skills").value.toLowerCase().split(",").map(x=>x.trim()).filter(Boolean),
+    interests:$("interests").value
   };
+  s("profile",profile);
+  $("profileStatus").textContent="Profile saved successfully!";
+  render();
+}
 
-  document.getElementById("score").innerText =
-    score + "% Match";
+const FL=/\b(registration fee|processing fee|security deposit|pay (a |the )?fee|whatsapp|telegram|guaranteed (selection|job|placement)|100% (selection|placement)|send money|share (your )?otp)\b/gi;
 
-  document.getElementById("eligibility").innerText =
-    eligible
-      ? "✅ Meets the specified education requirement."
-      : "⚠️ Does not meet the specified education requirement.";
+function analyze(){
+  if(!profile.name||!profile.education||!profile.skills||!profile.skills.length){toast("Complete and save your student profile first.");return}
+  const name=$("oppName").value.trim();
+  const required=$("required").value.toLowerCase().split(",").map(x=>x.trim()).filter(Boolean);
+  const minimum=$("minimum").value,deadline=$("deadline").value,details=$("details").value.trim(),link=$("link").value.trim();
+  if(!name||!required.length||!deadline||!details){toast("Please fill all opportunity details.");return}
 
-  const tasks = [
-    "Read the complete opportunity requirements",
-    "Prepare your updated resume",
-    "Prepare relevant certificates and documents",
-    "Complete the application form",
-    "Submit before the deadline"
-  ];
+  const matching=required.filter(k=>profile.skills.includes(k));
+  const skillScore=matching.length/required.length;
+  const years=["1st Year","2nd Year","3rd Year","4th Year"];
+  const eligible=minimum==="Any Year"||years.indexOf(profile.education)>=years.indexOf(minimum);
+  const score=Math.round(skillScore*80+(eligible?20:0));
+  cur={name,type:$("type").value,score,deadline,url:href(link)};
 
-  if (matching.length < required.length) {
-    tasks.unshift("Learn or improve missing skills: " +
-      required.filter(x => !matching.includes(x)).join(", "));
-  }
+  $("score").textContent=score+"% Match";
+  $("eligibility").textContent=eligible?"✅ Meets the specified education requirement.":"⚠️ Does not meet the specified education requirement.";
 
-  document.getElementById("checklist").innerHTML = "";
+  const fl=$("flags");fl.innerHTML="";
+  const hits=[...new Set((name+" "+details).toLowerCase().match(FL)||[])];
+  fl.appendChild(hits.length
+    ?box("bad","🚩 Possible red flags in the text: "+hits.join(", ")+". Real opportunities rarely ask for fees or move you to WhatsApp or Telegram. Verify on the official site.")
+    :box("ok","No common scam phrases found in the text you pasted. Still confirm on the official site."));
+  if(link){const v=verdict(link);fl.appendChild(v?box(v[0],v[1]):box("bad","The link you entered isn’t a valid web address."))}
 
-  tasks.forEach(task => {
-    const li = document.createElement("li");
-    const check = document.createElement("input");
-    check.type = "checkbox";
-    check.style.width = "auto";
-    li.appendChild(check);
-    li.append(" " + task);
-    document.getElementById("checklist").appendChild(li);
+  const tasks=["Verify the opportunity on the organiser’s official website","Read the complete opportunity requirements","Prepare your updated resume","Prepare relevant certificates and documents","Complete the application form","Submit before the deadline"];
+  if(matching.length<required.length)tasks.splice(1,0,"Learn or improve missing skills: "+required.filter(x=>!matching.includes(x)).join(", "));
+  const ul=$("checklist");ul.innerHTML="";
+  tasks.forEach(t=>{
+    const li=document.createElement("li"),c=document.createElement("input");
+    c.type="checkbox";c.style.width="auto";c.style.margin="0 6px 0 0";
+    li.append(c,t);ul.appendChild(li);
   });
-
-  document.getElementById("result").style.display = "block";
+  $("result").style.display="block";
 }
 
-function saveOpportunity() {
-  let saved = JSON.parse(localStorage.getItem("saved") || "[]");
-
-  if (saved.some(x => x.name === currentOpportunity.name)) {
-    alert("This opportunity is already saved!");
-    return;
-  }
-
-  saved.push(currentOpportunity);
-  localStorage.setItem("saved", JSON.stringify(saved));
-  displaySaved();
-  alert("Opportunity saved!");
+function saveOpp(o){
+  if(!o||!o.name)return;
+  const a=g("saved",[]);
+  if(a.some(x=>x.name===o.name)){toast("Already saved.");return}
+  a.push(o);s("saved",a);displaySaved();render();toast("Saved to your list ✓");
 }
+function removeSaved(n){s("saved",g("saved",[]).filter(x=>x.name!==n));displaySaved();render()}
 
-function displaySaved() {
-  const saved = JSON.parse(localStorage.getItem("saved") || "[]");
-  const list = document.getElementById("savedList");
-  list.innerHTML = "";
-
-  if (!saved.length) {
-    list.innerText = "No opportunities saved yet.";
-    return;
-  }
-
-  saved.forEach(item => {
-    const div = document.createElement("div");
-    div.className = "saved";
-
-    const title = document.createElement("strong");
-    title.textContent = item.name;
-
-    const info = document.createElement("p");
-    info.textContent = item.type + " | " +
-      item.score + "% match | Deadline: " + item.deadline;
-
-    div.append(title, info);
-    list.appendChild(div);
+function daysLeft(d){
+  if(!d)return"";
+  const n=Math.ceil((new Date(d+"T23:59:59")-new Date())/864e5);
+  return n<0?"Expired":n===0?"Due today":n+" days left";
+}
+function displaySaved(){
+  const list=$("savedList"),a=g("saved",[]).slice().sort((x,y)=>(x.deadline||"9999").localeCompare(y.deadline||"9999"));
+  list.innerHTML="";
+  if(!a.length){list.textContent="No opportunities saved yet. Analyze one above or save from the Explore page.";return}
+  a.forEach(it=>{
+    const div=document.createElement("div");div.className="saved";
+    const left=document.createElement("div"),t=document.createElement("strong"),p=document.createElement("p");
+    t.textContent=it.name;
+    p.textContent=[it.type,it.score!=null?it.score+"% match":"",it.deadline?"Deadline: "+it.deadline+" ("+daysLeft(it.deadline)+")":"Check the official site for the deadline"].filter(Boolean).join(" | ");
+    left.append(t,p);
+    const row=document.createElement("div");row.className="row";
+    if(it.url){const l=document.createElement("a");l.className="btn ghost";l.href=it.url;l.target="_blank";l.rel="noopener noreferrer";l.textContent="Open";row.appendChild(l)}
+    const r=document.createElement("button");r.className="ghost";r.textContent="Remove";r.onclick=()=>removeSaved(it.name);
+    row.appendChild(r);div.append(left,row);list.appendChild(div);
   });
 }
 
-window.onload = function() {
-  const oldProfile = JSON.parse(localStorage.getItem("profile") || "null");
+function chips(){
+  const c=$("chips");c.innerHTML="";
+  [["all","All"],["S","Scholarships"],["H","Hackathons"],["I","Internships"]].forEach(([k,l])=>{
+    const b=document.createElement("button");b.className="chip"+(F===k?" on":"");b.textContent=l;
+    b.onclick=()=>{F=k;chips();render()};c.appendChild(b);
+  });
+}
+function render(){
+  const q=$("q").value.toLowerCase().trim(),r=$("reg").value;
+  const terms=new Set(((profile.skills||[]).join(" ")+" "+(profile.interests||"")).toLowerCase().split(/[^a-z0-9+#]+/));
+  const sv=g("saved",[]).map(x=>x.name);
+  const list=D.filter(d=>(F==="all"||d[1]===F)&&(r==="all"||d[2]===r)&&(d[0]+" "+d[3]+" "+d[5]).toLowerCase().includes(q));
+  $("count").textContent=list.length+" verified source"+(list.length===1?"":"s");
+  const gd=$("grid");gd.innerHTML="";
+  if(!list.length){gd.textContent="Nothing matches. Try a different search or filter.";return}
+  list.forEach(d=>{
+    const m=d[5].split(" ").filter(t=>terms.has(t)&&t!=="engineering");
+    const c=document.createElement("div");c.className="op";
+    c.innerHTML='<div><span class="tag">'+T[d[1]]+'</span><span class="tag">'+(d[2]==="IN"?"India":"Global")+'</span></div><h4>'+d[0]+'</h4><p>'+d[3]+'</p>'+(m.length?'<div class="vf">★ Matches your profile: '+m.join(", ")+'</div>':'')+'<div class="vf">✔ Official or well-known source</div>';
+    const row=document.createElement("div");row.className="row";
+    const a=document.createElement("a");a.className="btn";a.href=d[4];a.target="_blank";a.rel="noopener noreferrer";a.textContent="Visit official site ↗";
+    const b=document.createElement("button");b.className="ghost";
+    const done=sv.includes(d[0]);b.textContent=done?"Saved ✓":"☆ Save";
+    b.onclick=()=>saveOpp({name:d[0],type:T[d[1]],score:null,deadline:"",url:d[4]});
+    row.append(a,b);c.appendChild(row);gd.appendChild(c);
+  });
+}
 
-  if (oldProfile) {
-    profile = oldProfile;
-    document.getElementById("name").value = profile.name;
-    document.getElementById("education").value = profile.education;
-    document.getElementById("skills").value = profile.skills.join(", ");
-    document.getElementById("interests").value = profile.interests;
+function route(){
+  const e=location.hash==="#explore";
+  $("v-home").hidden=e;$("v-explore").hidden=!e;
+  $("n-home").className=e?"":"on";$("n-explore").className=e?"on":"";
+  window.scrollTo(0,0);
+}
+addEventListener("hashchange",route);
+
+window.onload=function(){
+  if(profile.name!==undefined){
+    $("name").value=profile.name||"";
+    $("education").value=profile.education||"";
+    $("skills").value=(profile.skills||[]).join(", ");
+    $("interests").value=profile.interests||"";
   }
-
-  displaySaved();
+  chips();render();displaySaved();route();
 };
 </script>
-
 </body>
 </html>
